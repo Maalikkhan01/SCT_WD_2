@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stopwatch</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/23f1.svg">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- Poppins for nicer typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="stopwatch-container">
+    <div class="header">
+      <h1>Stopwatch</h1>
+      <div class="settings">
+        <button id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme (T)">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button id="settingsBtn" aria-label="Settings" title="Open settings (S)">
+          <i class="fas fa-cog"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="timer-display">
+      <div class="progress-ring">
+        <svg width="220" height="220" viewBox="0 0 220 220" aria-hidden="true">
+          <circle cx="110" cy="110" r="100" stroke-width="12" class="track" fill="transparent"/>
+          <circle cx="110" cy="110" r="100" stroke-width="12" class="progress-ring-circle" fill="transparent" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="display" id="display" aria-live="polite">00:00.000</div>
+      <div class="hint">Space: Start/Pause • L: Lap • R: Reset</div>
+    </div>
+
+    <div class="controls">
+      <button id="startStop" aria-label="Start/Stop" title="Start / Pause (Space)">
+        <i class="fas fa-play"></i>
+      </button>
+      <button id="lap" aria-label="Lap" title="Lap (L)" disabled>
+        <i class="fas fa-flag"></i>
+      </button>
+      <button id="reset" aria-label="Reset" title="Reset (R)" disabled>
+        <i class="fas fa-stop"></i>
+      </button>
+    </div>
+
+    <div class="stats">
+      <div class="stat-item">
+        <span>Laps</span>
+        <span id="lapCount">0</span>
+      </div>
+      <div class="stat-item">
+        <span>Fastest</span>
+        <span id="fastestLap">--:--.---</span>
+      </div>
+      <div class="stat-item">
+        <span>Slowest</span>
+        <span id="slowestLap">--:--.---</span>
+      </div>
+    </div>
+
+    <div class="laps-container">
+      <div class="laps-header">
+        <h2>Lap Times</h2>
+        <div class="laps-actions">
+          <button id="exportLaps" aria-label="Export laps" title="Export CSV">
+            <i class="fas fa-file-export"></i>
+          </button>
+          <button id="clearLaps" aria-label="Clear laps" title="Clear all laps">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <ul id="lapsList"></ul>
+    </div>
+
+    <div class="settings-panel" id="settingsPanel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <h3 id="settingsTitle">Settings</h3>
+      <div class="setting-group">
+        <label for="timeFormat">Time Format:</label>
+        <select id="timeFormat">
+          <option value="hhmmss">HH:MM:SS.mmm</option>
+          <option value="mmss" selected>MM:SS.mmm</option>
+          <option value="ss">SS.mmm</option>
+        </select>
+      </div>
+
+      <div class="setting-group">
+        <label for="showMilliseconds">Show Milliseconds:</label>
+        <input type="checkbox" id="showMilliseconds" checked>
+      </div>
+
+      <div class="setting-group">
+        <label for="enableSounds">Enable Sounds:</label>
+        <input type="checkbox" id="enableSounds" checked>
+      </div>
+
+      <div class="setting-group">
+        <label for="enableVibration">Enable Vibration (mobile):</label>
+        <input type="checkbox" id="enableVibration">
+      </div>
+
+      <div class="setting-group">
+        <label for="ringCycleMs">Ring Cycle (ms for full circle):</label>
+        <input type="number" id="ringCycleMs" min="1000" step="500" value="60000">
+      </div>
+
+      <button id="closeSettings">Close Settings</button>
+    </div>
+  </div>
+
+  <!-- Sounds -->
+  <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3"></audio>
+  <audio id="lapSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
